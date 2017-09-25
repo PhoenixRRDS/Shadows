@@ -1,6 +1,9 @@
 ﻿/*
  * TextureGenerator.cs
- * Copyright (c) 
+ * Copyright (c) 2017 Rudra Nil Basu <rudra.nil.basu.1996@gmail.com>
+ * AUTHORS
+ * Rudra Nil Basu <rudra.nil.basu.1996@gmail.com>
+ * Debayan De <debayan130@gmail.com>
  */
 using System.Collections;
 using System.Collections.Generic;
