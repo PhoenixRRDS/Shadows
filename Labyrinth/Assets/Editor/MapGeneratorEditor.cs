@@ -1,4 +1,4 @@
-﻿/*
+/*
  * MapGeneratorEditor.cs
  * Copyright (c) 2017 Rudra Nil Basu <rudra.nil.basu.1996@gmail.com>
  * AUTHORS
@@ -18,12 +18,12 @@ public class MapGeneratorEditor : Editor {
 
         if (DrawDefaultInspector()) {
             if (mapGen.autoUpdate) {
-                mapGen.GenerateMap();
+                mapGen.DrawMapInEditor();
             }
         }
 
         if (GUILayout.Button("Generate")) {
-            mapGen.GenerateMap();
+            mapGen.DrawMapInEditor();
         }
         //base.OnInspectorGUI();
     }
