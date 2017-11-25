@@ -7,11 +7,12 @@ public class Shooting : MonoBehaviour {
     Camera cam;
 
     [SerializeField]
-    GameObject hitParticle, muzzleFlash;
+    GameObject hitParticle, enemyHitParticles, muzzleFlash;
 
     [SerializeField]
     Transform shootPoint;
-    
+
+    int m_damageAmt = 50;
     
 	// Use this for initialization
 	void Start () {
@@ -30,8 +31,18 @@ public class Shooting : MonoBehaviour {
             {
                 if (hit.collider != null)
                 {
-                    GameObject explosion = Instantiate(hitParticle, hit.point, Quaternion.identity);
-                    Destroy(explosion, 1.0f);
+                    GameObject explosion;
+                    if (hit.collider.gameObject.tag == "Enemy")
+                    {
+                        Enemy enemy = hit.collider.gameObject.GetComponent<Enemy>();
+                        enemy.TakeDamage(m_damageAmt);
+                        explosion = Instantiate(enemyHitParticles, hit.point, Quaternion.identity);
+                    }
+                    else
+                    {
+                        explosion = Instantiate(hitParticle, hit.point, Quaternion.identity);
+                    }
+                    Destroy(explosion, 2.0f);
                 }
             }
         }
