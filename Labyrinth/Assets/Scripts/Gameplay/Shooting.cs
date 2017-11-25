@@ -7,8 +7,12 @@ public class Shooting : MonoBehaviour {
     Camera cam;
 
     [SerializeField]
-    GameObject hitParticle;
+    GameObject hitParticle, muzzleFlash;
 
+    [SerializeField]
+    Transform shootPoint;
+    
+    
 	// Use this for initialization
 	void Start () {
         cam = GetComponent<Camera>();
@@ -18,6 +22,8 @@ public class Shooting : MonoBehaviour {
 	void Update () {
         if (Input.GetMouseButtonDown(0))
         {
+            GameObject _muzzleFlash = Instantiate(muzzleFlash, shootPoint.position, Quaternion.identity);
+            //Destroy(_muzzleFlash, 1.0f);
             RaycastHit hit;
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out hit))
