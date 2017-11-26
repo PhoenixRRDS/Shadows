@@ -7,7 +7,7 @@ public class Shooting : MonoBehaviour {
     Camera cam;
 
     [SerializeField]
-    GameObject hitParticle, enemyHitParticles, muzzleFlash;
+    GameObject hitParticle, enemyHitParticles, muzzleFlash, gun;
 
     [SerializeField]
     Transform shootPoint;
@@ -23,7 +23,9 @@ public class Shooting : MonoBehaviour {
 	void Update () {
         if (Input.GetMouseButtonDown(0))
         {
+            gun.GetComponent<Animation>().Play("gunRecoil");
             GameObject _muzzleFlash = Instantiate(muzzleFlash, shootPoint.position, Quaternion.identity);
+            _muzzleFlash.AddComponent<SelfDestruct>();
             //Destroy(_muzzleFlash, 1.0f);
             RaycastHit hit;
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
