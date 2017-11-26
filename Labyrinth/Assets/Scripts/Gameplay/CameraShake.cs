@@ -7,11 +7,21 @@ public class CameraShake : MonoBehaviour
     public Camera mainCam;  // the camera which is to be shaked
     float shakeAmount = 0;
 
+    public static CameraShake instance;
+
     void Awake()
     {
         if (mainCam == null)
         {
             Debug.Log("No Camera Found");
+        }
+
+        if (instance != null)
+        {
+            Debug.LogError("> 1 Cam Shake");
+        }
+        else {
+            instance = this;
         }
     }
 
@@ -25,7 +35,7 @@ public class CameraShake : MonoBehaviour
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.T))
-            Shake(0.2f, 0.5f);
+            Shake(0.2f, 0.1f);
     }
 
     void BeginShake()

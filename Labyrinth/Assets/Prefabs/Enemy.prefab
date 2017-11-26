@@ -542,6 +542,7 @@ MonoBehaviour:
   plasmaEffect: {fileID: 1000011128802252, guid: 96730f8640590934eacb6f860058e7f9,
     type: 2}
   shootPoint: {fileID: 4515594361146478}
+  explosionClip: {fileID: 8300000, guid: 553593b78adfc9040a7073f29747ced7, type: 3}
 --- !u!135 &135140344893491872
 SphereCollider:
   m_ObjectHideFlags: 1

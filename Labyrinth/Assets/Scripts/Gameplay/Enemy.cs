@@ -26,6 +26,9 @@ public class Enemy : MonoBehaviour {
     [SerializeField]
     Transform shootPoint;
 
+    [SerializeField]
+    AudioClip explosionClip;
+
     float timeLeftToShoot, shootInterval = 5.0f;
 
     // Use this for initialization
@@ -65,6 +68,9 @@ public class Enemy : MonoBehaviour {
     void Die()
     {
         GameObject _deathEffect = Instantiate(deathEffect, transform.position, Quaternion.identity);
+        AudioSource _as = _deathEffect.AddComponent<AudioSource>();
+        _as.clip = explosionClip;
+        _as.spatialBlend = 1.0f;
         _deathEffect.AddComponent<SelfDestruct>();
         Destroy(gameObject);
     }
