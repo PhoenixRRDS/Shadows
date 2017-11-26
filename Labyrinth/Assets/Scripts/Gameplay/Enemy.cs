@@ -21,7 +21,7 @@ public class Enemy : MonoBehaviour {
     float health;
 
     [SerializeField]
-    GameObject enemyBullet;
+    GameObject enemyBullet, plasmaEffect;
 
     [SerializeField]
     Transform shootPoint;
@@ -35,12 +35,14 @@ public class Enemy : MonoBehaviour {
         health = maxHealth;
 
         timeLeftToShoot = shootInterval;
+        GameObject _plasma = Instantiate(plasmaEffect, transform.position, Quaternion.identity);
+        _plasma.AddComponent<SelfDestruct>();
 	}
 	
 	// Update is called once per frame
 	void Update () {
         transform.LookAt(new Vector3(target.position.x + xOff, target.position.y + yOff, target.position.z + zOff));
-        rb.velocity = transform.forward * speed;
+        rb.velocity = transform.forward * speed; // vary the speed depending on the distance between the player
 
         if (timeLeftToShoot <= 0.0f)
         {
@@ -70,5 +72,14 @@ public class Enemy : MonoBehaviour {
     void Shoot()
     {
         Instantiate(enemyBullet, shootPoint.position, transform.rotation);
+    }
+
+    void OnCollisionEnter(Collision coll)
+    {
+        if (coll.gameObject.CompareTag("Player"))
+        {
+            coll.gameObject.GetComponent<Player>().TakeDamage(25);
+            Die();
+        }
     }
 }

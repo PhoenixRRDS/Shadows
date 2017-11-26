@@ -40,7 +40,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Floats:
     - _MKGlowOffSet: 0.0375
-    - _MKGlowPower: 1.44
+    - _MKGlowPower: 2.5
     - _MKGlowTexStrength: 3.62
     - _RimPower: 3
     - _Shininess: 0.078125
