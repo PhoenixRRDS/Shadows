@@ -13,17 +13,23 @@ public class Shooting : MonoBehaviour {
     Transform shootPoint;
 
     int m_damageAmt = 50;
+
+    private AudioManager m_audioManger;
+    private Player m_player;
     
 	// Use this for initialization
 	void Start () {
         cam = GetComponent<Camera>();
+        m_audioManger = AudioManager.instance;
+        m_player = Player.instance;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && m_player.isAlive())
         {
             gun.GetComponent<Animation>().Play("gunRecoil");
+            m_audioManger.PlaySound("Shoot");
             GameObject _muzzleFlash = Instantiate(muzzleFlash, shootPoint.position, Quaternion.identity);
             _muzzleFlash.AddComponent<SelfDestruct>();
             //Destroy(_muzzleFlash, 1.0f);

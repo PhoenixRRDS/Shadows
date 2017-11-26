@@ -12,7 +12,22 @@ public class Player : MonoBehaviour {
     bool isDead;
 
     [SerializeField]
-    GameObject bloodUI, deathUI;
+    GameObject bloodUI, deathUI, quotesUI;
+
+    public static Player instance;
+
+    string[] quotes = { " \" Nature does not concern itself with good or evil, awarding the ones who are stronger in the moment \" ", " \" It's not the strongest of the species that survives, nor the most intelligent that survives. It is the one that is most adaptable to change \" - Charles Darwin ", "\"When you feel like a victim, the world finds ways to reinforce that feeling\""};
+
+    void Awake()
+    {
+        if (instance != null)
+        {
+            Debug.LogError("More than one player in the scene");
+        }
+        else {
+            instance = this;
+        }
+    }
 
 	// Use this for initialization
 	void Start () {
@@ -28,7 +43,7 @@ public class Player : MonoBehaviour {
     public void TakeDamage(int amt)
     {
         currentHealth -= amt;
-        if (currentHealth <= 0)
+        if (currentHealth <= 0 && !isDead)
         {
             Die();
         }
@@ -41,6 +56,13 @@ public class Player : MonoBehaviour {
     {
         isDead = true;
         deathUI.GetComponent<Image>().DOFade(1.0f, 0.5f);
+        quotesUI.GetComponent<Text>().text = quotes[Random.Range(0, quotes.Length - 1)];
+        quotesUI.GetComponent<Animation>().Play("quoteAnim");
         Destroy(GameObject.FindGameObjectWithTag("EnemyGenerator"));
+    }
+
+    public bool isAlive()
+    {
+        return !isDead;
     }
 }

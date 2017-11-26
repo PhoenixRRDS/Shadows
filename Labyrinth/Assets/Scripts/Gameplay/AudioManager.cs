@@ -30,6 +30,11 @@ public class Sound
         source.pitch = pitch * (1 + Random.Range(-randomPitch / 2f, randomPitch / 2f));
         source.Play();
     }
+
+    public void Stop()
+    {
+        source.Stop();
+    }
 }
 
 public class AudioManager : MonoBehaviour
@@ -68,6 +73,21 @@ public class AudioManager : MonoBehaviour
             if (sounds[i].name == _name)
             {
                 sounds[i].Play();
+                return;
+            }
+        }
+
+        // when the sound _name is not found
+        Debug.LogWarning("No Audio Found in the name " + _name);
+    }
+
+    public void StopSound(string _name)
+    {
+        for (int i = 0; i < sounds.Length; i++)
+        {
+            if (sounds[i].name == _name)
+            {
+                sounds[i].Stop();
                 return;
             }
         }

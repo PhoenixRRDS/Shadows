@@ -25,9 +25,12 @@ public class WaveSpawner : MonoBehaviour {
 
     private float searchCountDown = 5f;
 
+    WaveMusic waveMusic;
+
 	// Use this for initialization
 	void Start () {
         waveCountDown = timeBetweenWaves;
+        waveMusic = WaveMusic.instance;
 
         if (spawnPoints.Length == 0)
         {
@@ -62,6 +65,7 @@ public class WaveSpawner : MonoBehaviour {
 
     void WaveCompleted()
     {
+        waveMusic.StopWaveSound();
         Debug.Log("Wave complete");
         state = SpawnState.COUNTING;
         waveCountDown = timeBetweenWaves;
@@ -90,6 +94,7 @@ public class WaveSpawner : MonoBehaviour {
 
     IEnumerator SpawnWaves(Wave _wave)
     {
+        waveMusic.StartWaveSound();
         print("Spawning wave: " + nextWave);
         state = SpawnState.SPAWNING;
 
