@@ -14,6 +14,9 @@ public class Player : MonoBehaviour {
     [SerializeField]
     GameObject bloodUI, deathUI, quotesUI;
 
+    [SerializeField]
+    Image healthBarUI;
+
     public static Player instance;
 
     string[] quotes = { " \" Nature does not concern itself with good or evil, awarding the ones who are stronger in the moment \" ", " \" It's not the strongest of the species that survives, nor the most intelligent that survives. It is the one that is most adaptable to change \" - Charles Darwin ", "\"When you feel like a victim, the world finds ways to reinforce that feeling\""};
@@ -33,7 +36,9 @@ public class Player : MonoBehaviour {
 	void Start () {
         isDead = false;
         currentHealth = maxHealth;
-	}
+        healthBarUI.fillAmount = 0.0f;
+        healthBarUI.DOFillAmount(((currentHealth * 1.0f) / maxHealth), 1.0f);
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -45,11 +50,13 @@ public class Player : MonoBehaviour {
         currentHealth -= amt;
         if (currentHealth <= 0 && !isDead)
         {
+            currentHealth = 0;
             Die();
         }
         else {
             bloodUI.GetComponent<Animation>().Play("bloodEffect");
         }
+        healthBarUI.DOFillAmount(((currentHealth * 1.0f) / maxHealth), 0.5f);
     }
 
     void Die()
