@@ -31,6 +31,8 @@ public class Enemy : MonoBehaviour {
 
     float timeLeftToShoot, shootInterval = 5.0f;
 
+    AudioManager m_audioManager;
+
     // Use this for initialization
     void Start () {
         target = GameObject.FindGameObjectWithTag("Player").transform;
@@ -40,6 +42,8 @@ public class Enemy : MonoBehaviour {
         timeLeftToShoot = shootInterval;
         GameObject _plasma = Instantiate(plasmaEffect, transform.position, Quaternion.identity);
         _plasma.AddComponent<SelfDestruct>();
+
+        m_audioManager = AudioManager.instance;
 	}
 	
 	// Update is called once per frame
@@ -67,6 +71,7 @@ public class Enemy : MonoBehaviour {
 
     void Die()
     {
+        m_audioManager.PlaySound("Explode");
         GameObject _deathEffect = Instantiate(deathEffect, transform.position, Quaternion.identity);
         AudioSource _as = _deathEffect.AddComponent<AudioSource>();
         _as.clip = explosionClip;
