@@ -26,7 +26,6 @@ public class LoadingBar : MonoBehaviour {
         while (!operation.isDone)
         {
             slider.value = operation.progress;
-            Debug.Log(operation.progress);
             yield return null;
         }
     }

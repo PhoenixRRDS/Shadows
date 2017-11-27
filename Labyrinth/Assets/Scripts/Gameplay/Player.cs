@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour {
 
@@ -12,7 +13,7 @@ public class Player : MonoBehaviour {
     bool isDead;
 
     [SerializeField]
-    GameObject bloodUI, deathUI, quotesUI;
+    GameObject bloodUI, deathUI, quotesUI, backgroundImg, retryBtn, exitBtn;
 
     [SerializeField]
     Image healthBarUI;
@@ -23,6 +24,10 @@ public class Player : MonoBehaviour {
     string[] quotes = { " \" Nature does not concern itself with good or evil, awarding the ones who are stronger in the moment \" ", " \" It's not the strongest of the species that survives, nor the most intelligent that survives. It is the one that is most adaptable to change \" - Charles Darwin ", "\"When you feel like a victim, the world finds ways to reinforce that feeling\""};
 
     AudioManager m_audioManager;
+
+    enum MainMenuState {RETRY, EXIT};
+    MainMenuState currentState = MainMenuState.RETRY;
+    int currentIndex;
 
     void Awake()
     {
@@ -50,7 +55,39 @@ public class Player : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
+        if (isDead)
+        {
+            if (Input.GetKeyDown(KeyCode.DownArrow))
+            {
+                currentIndex++;
+                if (currentIndex > 1) {
+                    currentIndex = 0;
+                }
+                //currentIndex = currentIndex % 2;
+                UpdateAnimation();
+            }
+            if (Input.GetKeyDown(KeyCode.UpArrow))
+            {
+                currentIndex--;
+                if (currentIndex < 0) {
+                    currentIndex = 1;
+                }
+                UpdateAnimation();
+                //currentIndex = currentIndex % 2;
+            }
+
+            currentState = (currentIndex == 0) ? MainMenuState.RETRY : MainMenuState.EXIT;
+
+            if (Input.GetKeyDown(KeyCode.Return)) {
+                if (currentState == MainMenuState.RETRY)
+                {
+                    SceneManager.LoadScene("loading");
+                }
+                else {
+                    SceneManager.LoadScene("menu");
+                }
+            }
+        }
 	}
 
     public void TakeDamage(int amt)
@@ -75,11 +112,29 @@ public class Player : MonoBehaviour {
         deathUI.GetComponent<Image>().DOFade(1.0f, 0.5f);
         quotesUI.GetComponent<Text>().text = quotes[Random.Range(0, quotes.Length - 1)];
         quotesUI.GetComponent<Animation>().Play("quoteAnim");
+        currentState = MainMenuState.RETRY;
+        backgroundImg.GetComponent<Animation>().Play("menuGoUp");
+        //UpdateAnimation();
         Destroy(GameObject.FindGameObjectWithTag("EnemyGenerator"));
+
+        backgroundImg.SetActive(true);
+        retryBtn.SetActive(true);
+        exitBtn.SetActive(true);
+        currentState = MainMenuState.RETRY;
+        currentIndex = 0;
     }
 
     public bool isAlive()
     {
         return !isDead;
+    }
+
+    void UpdateAnimation()
+    {
+        //print("Current State: " + MainMenuState.RETRY);
+        if (currentState == MainMenuState.RETRY)
+            backgroundImg.GetComponent<Animation>().Play("menuGoDown");
+        else
+            backgroundImg.GetComponent<Animation>().Play("menuGoUp");
     }
 }
