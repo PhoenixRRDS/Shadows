@@ -1522,13 +1522,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waves:
   - enemy: {fileID: 4741341621112004, guid: 5f538ee53e6a7534bac15771292408bd, type: 2}
-    count: 2
-    rate: 1
-  - enemy: {fileID: 4741341621112004, guid: 5f538ee53e6a7534bac15771292408bd, type: 2}
-    count: 5
+    count: 10
     rate: 0.5
   - enemy: {fileID: 4741341621112004, guid: 5f538ee53e6a7534bac15771292408bd, type: 2}
-    count: 10
+    count: 20
+    rate: 0.5
+  - enemy: {fileID: 4741341621112004, guid: 5f538ee53e6a7534bac15771292408bd, type: 2}
+    count: 30
     rate: 0.5
   spawnPoints:
   - {fileID: 248955655}
