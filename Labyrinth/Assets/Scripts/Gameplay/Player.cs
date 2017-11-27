@@ -33,8 +33,6 @@ public class Player : MonoBehaviour {
         else {
             instance = this;
         }
-
-        cameraShake = CameraShake.instance;
     }
 
 	// Use this for initialization
@@ -44,6 +42,7 @@ public class Player : MonoBehaviour {
         healthBarUI.fillAmount = 0.0f;
         healthBarUI.DOFillAmount(((currentHealth * 1.0f) / maxHealth), 1.0f);
 
+        cameraShake = CameraShake.instance;
         m_audioManager = AudioManager.instance;
         if (m_audioManager == null)
             Debug.LogError("AM IS NULL");
